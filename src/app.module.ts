@@ -11,23 +11,23 @@ import { FrameworksModule } from './frameworks/frameworks.module.js';
   imports: [
 
     ConfigModule.forRoot({ isGlobal: true }),
-    // TypeOrmModule.forRootAsync({
-    //   inject: [ConfigService],
-    //   useFactory: (config: ConfigService) => ({
-    //  type: 'mysql',
-    // host: config.get('DB_HOST'),
-    // port: Number(config.get('DB_PORT')),
-    // username: config.get('DB_USER'),
-    // password: config.get('DB_PASSWORD'),
-    // database: config.get('DB_DATABASE'),
-    // ssl: { rejectUnauthorized: false },
-    // autoLoadEntities: true,
-    // synchronize: false,
-    //   }),
-    // }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+     type: 'mysql',
+    host: config.get('DB_HOST'),
+    port: Number(config.get('DB_PORT')),
+    username: config.get('DB_USER'),
+    password: config.get('DB_PASSWORD'),
+    database: config.get('DB_DATABASE'),
+    ssl: { rejectUnauthorized: false },
+    autoLoadEntities: true,
+    synchronize: false,
+      }),
+    }),
 
-    // SkillsModule, 
-    // FrameworksModule,
+    SkillsModule, 
+    FrameworksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
