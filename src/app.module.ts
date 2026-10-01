@@ -20,7 +20,7 @@ import { FrameworksModule } from './frameworks/frameworks.module.js';
     username: config.get('DB_USER'),
     password: config.get('DB_PASSWORD'),
     database: config.get('DB_DATABASE'),
-    url: config.get<string>('SERVER_URI'),
+
     ssl: { rejectUnauthorized: false },
     autoLoadEntities: true,
     synchronize: false,
