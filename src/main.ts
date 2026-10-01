@@ -1,7 +1,7 @@
+import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module.js';
-import 'mysql2';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

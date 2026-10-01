@@ -7,10 +7,10 @@ export class Framework {
     @PrimaryGeneratedColumn()
     id: number;
 
-      @Column()
+      @Column('varchar')
     skill_id: string;
 
-    @Column()
+    @Column('varchar')
     framework_name: string;
     
 }
