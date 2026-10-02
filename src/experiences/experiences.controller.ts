@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Put } from '@nestjs/common';
 import { ExperiencesService } from './experiences.service.js';
 import { CreateExperienceDto } from './dto/create-experience.dto.js';
 import { UpdateExperienceDto } from './dto/update-experience.dto.js';
@@ -8,8 +8,8 @@ export class ExperiencesController {
   constructor(private readonly experiencesService: ExperiencesService) {}
 
   @Post()
-  create(@Body() createExperienceDto: CreateExperienceDto) {
-    return this.experiencesService.create(createExperienceDto);
+  create(@Body() dto: CreateExperienceDto) {
+    return this.experiencesService.create(dto);
   }
 
   @Get()
@@ -22,13 +22,25 @@ export class ExperiencesController {
     return this.experiencesService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExperienceDto: UpdateExperienceDto) {
-    return this.experiencesService.update(+id, updateExperienceDto);
+    @Put(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdateExperienceDto,
+  ) {
+    return this.experiencesService.update(id, dto);
   }
 
+
+  @Patch(':id')
+  // update(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Body() dto: UpdateExperienceDto,
+  // ) {
+  //   return this.experiencesService.update(id, dto);
+  // }
+
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.experiencesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.experiencesService.remove(id);
   }
 }
