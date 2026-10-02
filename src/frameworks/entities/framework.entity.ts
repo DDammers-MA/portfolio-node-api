@@ -7,7 +7,7 @@ export class Framework {
     @PrimaryGeneratedColumn()
     id: number;
 
-      @Column('varchar')
+      @Column('varchar', { name: 'skill_id' })
     skill_id: string;
 
     @Column('varchar')

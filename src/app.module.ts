@@ -24,6 +24,8 @@ import { FrameworksModule } from './frameworks/frameworks.module.js';
     ssl: { rejectUnauthorized: false },
     autoLoadEntities: true,
     synchronize: false,
+      logging: true,
+
       }),
     }),
 

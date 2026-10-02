@@ -8,15 +8,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class FrameworksService {
   
-  constructor(@InjectRepository(Framework) private repo: Repository<Framework>) {}
+  constructor( @InjectRepository(Framework) private readonly repo: Repository<Framework>) {}
   
 
   create(createFrameworkDto: CreateFrameworkDto) {
     return 'This action adds a new framework';
   }
 
-  findAll() {
-    return this.repo.find();
+ findAll(skillId?: string) {
+    return this.repo.find({
+      select: { id: true, skill_id: true, framework_name: true },
+      where: skillId ? { skill_id: skillId } : {},
+    });
   }
 
   findOne(id: number) {

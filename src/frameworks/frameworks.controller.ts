@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { FrameworksService } from './frameworks.service.js';
 import { CreateFrameworkDto } from './dto/create-framework.dto.js';
 import { UpdateFrameworkDto } from './dto/update-framework.dto.js';
@@ -13,8 +13,9 @@ export class FrameworksController {
   }
 
   @Get()
-  findAll() {
-    return this.frameworksService.findAll();
+ findAll(@Query('skill_id') skillId?: string) {
+    console.log('skill_id =', skillId, typeof skillId);
+     return this.frameworksService.findAll(skillId);
   }
 
   @Get(':id')
