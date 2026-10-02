@@ -6,6 +6,7 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { SkillsModule } from './skills/skills.module.js';
 import { FrameworksModule } from './frameworks/frameworks.module.js';
+import { ExperiencesModule } from './experiences/experiences.module.js';
 
 @Module({
   imports: [
@@ -24,13 +25,13 @@ import { FrameworksModule } from './frameworks/frameworks.module.js';
     ssl: { rejectUnauthorized: false },
     autoLoadEntities: true,
     synchronize: false,
-      logging: true,
+      // logging: true,
 
       }),
     }),
 
     SkillsModule, 
-    FrameworksModule,
+    FrameworksModule, ExperiencesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
