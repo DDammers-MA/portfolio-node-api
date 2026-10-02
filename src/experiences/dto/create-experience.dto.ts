@@ -22,4 +22,6 @@ export class CreateExperienceDto {
   @IsOptional()
   @IsString()
   description?: string;
+
+  
 }

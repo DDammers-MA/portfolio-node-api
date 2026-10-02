@@ -14,7 +14,6 @@ export class FrameworksController {
 
   @Get()
  findAll(@Query('skill_id') skillId?: string) {
-    console.log('skill_id =', skillId, typeof skillId);
      return this.frameworksService.findAll(skillId);
   }
 

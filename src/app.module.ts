@@ -7,6 +7,9 @@ import { AppService } from './app.service.js';
 import { SkillsModule } from './skills/skills.module.js';
 import { FrameworksModule } from './frameworks/frameworks.module.js';
 import { ExperiencesModule } from './experiences/experiences.module.js';
+import { ProjectsModule } from './projects/projects.module.js';
+import { AuthModule } from './auth/auth.module.js';
+import { UsersModule } from './users/users.module.js';
 
 @Module({
   imports: [
@@ -29,9 +32,13 @@ import { ExperiencesModule } from './experiences/experiences.module.js';
 
       }),
     }),
-
+    AuthModule,
     SkillsModule, 
-    FrameworksModule, ExperiencesModule,
+    FrameworksModule, 
+    ExperiencesModule, 
+    ProjectsModule, 
+    AuthModule, 
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
