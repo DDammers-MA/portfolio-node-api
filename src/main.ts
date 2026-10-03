@@ -10,7 +10,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.useBodyParser('json', { limit: '10mb' });
-  app.useStaticAssets(join(process.cwd(), 'uploads'), { prefix: '/uploads' });
+  // app.useStaticAssets(join(process.cwd(), 'uploads'), { prefix: '/uploads' });
 
   app.enableCors({
     origin: ['http://localhost:4200', 'https://dammienet.eu'],

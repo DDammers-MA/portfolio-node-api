@@ -10,6 +10,7 @@ import { ExperiencesModule } from './experiences/experiences.module.js';
 import { ProjectsModule } from './projects/projects.module.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
+import { ContactModule } from './contact/contact.module.js';
 
 @Module({
   imports: [
@@ -38,7 +39,7 @@ import { UsersModule } from './users/users.module.js';
     ExperiencesModule, 
     ProjectsModule, 
     AuthModule, 
-    UsersModule,
+    UsersModule, ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],
