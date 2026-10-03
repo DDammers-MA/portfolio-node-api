@@ -10,10 +10,11 @@ for (const filename of await readdir(dir)) {
   if (!contentType) continue; // skip anything that isn't an image
 
   const blob = await put(`projects/${filename}`, await readFile(join(dir, filename)), {
-    access: 'public',
-    contentType,
-    addRandomSuffix: false, // keeps the filename readable
-  });
+  access: 'public',
+  contentType,
+  addRandomSuffix: false,
+  allowOverwrite: true,
+});
 
   const f = filename.replace(/'/g, "''");
   for (const col of ['main_image', 'sub_image_1', 'sub_image_2', 'sub_image_3']) {
