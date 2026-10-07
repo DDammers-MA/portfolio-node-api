@@ -14,7 +14,7 @@ export class User {
   @Column({ select: false }) // never loaded unless explicitly asked for
   password: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'datetime', nullable: true })
   created_at: Date;
 
   @Column({ type: 'datetime', nullable: true })

@@ -38,6 +38,7 @@ export class AuthService {
       this.users.create({
         name: dto.name,
         email: dto.email,
+        created_at: new Date(),
         password: await hash(dto.password, 10),
         role_id: 2, // fixed on the server, never taken from the request
       }),
