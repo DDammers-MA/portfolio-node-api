@@ -13,39 +13,74 @@ export class ContactService {
    private readonly logger = new Logger(ContactService.name);
 
 
-   async send(dto: CreateContactDto) {
-    // created per call, so a missing env var can't crash the app at startup
-    const transport = createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT ?? 465),
-      secure: Number(process.env.SMTP_PORT ?? 465) === 465,
-      auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+async send(dto: CreateContactDto) {
+  const port = Number(process.env.SMTP_PORT ?? 465);
+
+  const transport = createTransport({
+    host: process.env.SMTP_HOST,
+    port,
+    secure: port === 465,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+
+  try {
+    await transport.verify();
+
+    await transport.sendMail({
+      to: process.env.MAIL_TO ?? 'dammersdaniel@gmail.com',
+
+      // IMPORTANT: use the authenticated SMTP account
+      from: `"Portfolio" <${process.env.SMTP_USER}>`,
+
+      // User's email goes here so you can reply
+      replyTo: dto.email,
+
+      subject: dto.subject,
+
+      html: `
+        <p>Daniel,</p>
+
+        <p>
+          Er is een mail binnengekomen van
+          <b>${esc(dto.naam)}</b>
+          over
+          <b>${esc(dto.subject)}</b>.
+        </p>
+
+        <p>
+          <b>Naam:</b> ${esc(dto.naam)} (${esc(dto.mv)})<br />
+          <b>Email:</b> ${esc(dto.email)}<br />
+          <b>Telefoon:</b> ${esc(dto.tel ?? 'Geen telefoonnummer opgegeven')}
+        </p>
+
+        <p><b>Vraag/opmerking:</b></p>
+
+        <p>
+          ${esc(dto.msg).replace(/\n/g, '<br />')}
+        </p>
+      `,
     });
 
-    try {
-      await transport.sendMail({
-        to: process.env.MAIL_TO ?? 'dammersdaniel@gmail.com',
-        from: `"Portfolio" <portfolio@dammienet.eu>`,
-        replyTo: dto.email,
-        subject: dto.subject,
-        html: `
-          <p>Daniel,</p>
-          <p>Er is een mail binnengekomen van <b>${esc(dto.naam)}</b> over <b>${esc(dto.subject)}</b>:</p>
-          <p>
-            Naam: ${esc(dto.naam)} (${esc(dto.mv)})<br />
-            Email: ${esc(dto.email)}<br />
-            Telefoon: ${esc(dto.tel ?? 'Geen telefoonnummer opgegeven')}
-          </p>
-          <p>Vraag/opmerking:</p>
-          <p>${esc(dto.msg).replace(/\n/g, '<br />')}</p>`,
-      });
-      return { message: 'Bericht verstuurd' };
-    } catch (err) {
-      this.logger.error(`Mail failed: ${(err as Error).message}`);
-      throw new InternalServerErrorException('Er ging iets mis bij het versturen');
-    }
+    return {
+      message: 'Bericht verstuurd',
+    };
+
+  } catch (err) {
+    const error = err as Error;
+
+    this.logger.error(
+      `Mail failed: ${error.message}`,
+      error.stack,
+    );
+
+    throw new InternalServerErrorException(
+      'Er ging iets mis bij het versturen',
+    );
   }
-  
+}
 
   create(createContactDto: CreateContactDto) {
     return 'This action adds a new contact';
